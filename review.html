@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Reviews | Balanced Body Guide</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f0f9ff;
+text-align:center;
+}
+
+nav{
+background:#0f766e;
+padding:15px;
+}
+
+nav a{
+color:white;
+margin:15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+header{
+background:linear-gradient(135deg,#0f766e,#14b8a6);
+color:white;
+padding:40px;
+}
+
+.container{
+width:80%;
+margin:auto;
+margin-top:40px;
+}
+
+button{
+padding:12px 25px;
+background:#0f766e;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:16px;
+}
+
+.review-card{
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+text-align:left;
+}
+
+.stars{
+font-size:25px;
+color:#fbbf24;
+}
+
+/* POPUP /
+
+.popup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+.popup-content{
+background:white;
+width:350px;
+padding:25px;
+border-radius:10px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+.popup-content input,
+.popup-content textarea{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+.close{
+float:right;
+cursor:pointer;
+font-size:20px;
+}
+
+/ CLICKABLE STARS */
+
+.star{
+font-size:30px;
+cursor:pointer;
+color:#ccc;
+}
+
+.star.active{
+color:#fbbf24;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="loss.html">Weight Loss</a>
+<a href="gain.html">Weight Gain</a>
+<a href="review.html">Reviews</a>
+</nav>
+
+<header>
+
+<h1>User Reviews</h1>
+<p>Rate your experience with Balanced Body Guide</p>
+
+</header>
+
+<div class="container">
+
+<button onclick="openPopup()">Write a Review</button>
+
+<div id="reviewList"></div>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<span class="close" onclick="closePopup()">✖</span>
+
+<h2>Rate Our Guide</h2>
+
+<input type="text" id="name" placeholder="Your Name">
+
+<div id="starRating">
+
+<span class="star" onclick="setRating(1)">★</span>
+<span class="star" onclick="setRating(2)">★</span>
+<span class="star" onclick="setRating(3)">★</span>
+<span class="star" onclick="setRating(4)">★</span>
+<span class="star" onclick="setRating(5)">★</span>
+
+</div>
+
+<textarea id="message" placeholder="Write your review"></textarea>
+
+<button onclick="submitReview()">Submit Review</button>
+
+</div>
+
+</div>
+
+<script>
+
+let rating=0;
+
+function openPopup(){
+document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+function setRating(value){
+
+rating=value;
+
+let stars=document.querySelectorAll(".star");
+
+stars.forEach((star,index)=>{
+
+if(index<value){
+star.classList.add("active");
+}else{
+star.classList.remove("active");
+}
+
+});
+
+}
+
+function submitReview(){
+
+let name=document.getElementById("name").value;
+let message=document.getElementById("message").value;
+
+if(name=="" || message=="" || rating==0){
+alert("Please fill all fields and select rating");
+return;
+}
+
+let reviewData={
+name:name,
+rating:rating,
+message:message
+};
+
+let reviews=JSON.parse(localStorage.getItem("reviews")) || [];
+
+reviews.push(reviewData);
+
+localStorage.setItem("reviews",JSON.stringify(reviews));
+
+displayReviews();
+
+closePopup();
+
+document.getElementById("name").value="";
+document.getElementById("message").value="";
+
+}
+
+function displayReviews(){
+
+let reviewList=document.getElementById("reviewList");
+
+reviewList.innerHTML="";
+
+let reviews=JSON.parse(localStorage.getItem("reviews")) || [];
+
+reviews.forEach(r=>{
+
+let stars="";
+
+for(let i=0;i<r.rating;i++){
+stars+="⭐";
+}
+
+let review=document.createElement("div");
+review.className="review-card";
+
+review.innerHTML=
+"<h3>"+r.name+"</h3>"+
+"<div class='stars'>"+stars+"</div>"+
+"<p>"+r.message+"</p>";
+
+reviewList.appendChild(review);
+
+});
+
+}
+
+window.onload=displayReviews;
+
+</script>
+
+</body>
+</html>

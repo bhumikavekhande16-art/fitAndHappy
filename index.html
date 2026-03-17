@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Balanced Body Guide</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:linear-gradient(135deg,#dff6f0,#f4fdfc);
+text-align:center;
+color:#333;
+}
+
+/* HEADER */
+
+header{
+background:#0f766e;
+color:white;
+padding:40px;
+position:relative;
+text-align:center;
+}
+
+.logo{
+width:170px;
+position:absolute;
+top:30px;
+}
+
+.left-logo{
+left:50px;
+}
+
+.right-logo{
+right:50px;
+}
+
+.header-text h1{
+font-size:60px;
+margin:0;
+}
+
+.header-text p{
+font-size:18px;
+}
+
+/* PAGE CONTENT */
+
+.container{
+width:85%;
+margin:auto;
+padding:20px;
+}
+
+h2{
+font-size:28px;
+margin-top:25px;
+}
+
+/* INPUT */
+
+input{
+padding:10px;
+margin:8px;
+border:1px solid #ccc;
+border-radius:5px;
+font-size:16px;
+}
+
+/* BUTTON */
+
+button{
+padding:10px 20px;
+background:#0f766e;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#115e59;
+}
+
+/* BMI SECTION */
+
+.bmi-section{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+}
+
+/* GOAL CARDS */
+
+.options{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:20px;
+width:220px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card a{
+display:block;
+margin-top:10px;
+padding:10px;
+background:#0f766e;
+color:white;
+text-decoration:none;
+border-radius:5px;
+}
+
+/* BOX */
+
+.box{
+background:white;
+padding:20px;
+margin-top:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<img src="logo.jpeg" class="logo left-logo">
+
+<div class="header-text">
+<h1>Balanced Body Guide</h1>
+<p>Your guide to a healthy lifestyle</p>
+</div>
+
+<img src="logo.jpeg" class="logo right-logo">
+
+</header>
+
+
+<div class="container">
+
+<h2>Create Profile</h2>
+
+<input type="text" placeholder="Name">
+<input type="number" placeholder="Age">
+
+<div class="bmi-section">
+
+<input type="number" id="height" placeholder="Height (cm)">
+<input type="number" id="weight" placeholder="Weight (kg)">
+
+<button onclick="calculateBMI()">Calculate BMI</button>
+
+</div>
+
+<h3 id="bmiResult"></h3>
+
+
+<h2>Choose Your Goal</h2>
+
+<div class="options">
+
+<div class="card">
+<h3>Weight Gain</h3>
+<p>Healthy foods to increase weight</p>
+<a href="gain.html">Start</a>
+</div>
+
+<div class="card">
+<h3>Weight Loss</h3>
+<p>Healthy diet for fat loss</p>
+<a href="loss.html">Start</a>
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<h2>Automatic Diet Plan</h2>
+
+<button onclick="showDiet()">Get Diet Plan</button>
+
+<p id="dietResult"></p>
+
+</div>
+
+
+<div class="box">
+
+<h2>Water Intake Tracker</h2>
+
+<p>Enter how many glasses of water you drank today</p>
+
+<input type="number" id="water">
+
+<button onclick="trackWater()">Track</button>
+
+<h3 id="waterResult"></h3>
+
+</div>
+
+</div>
+
+
+<script>
+
+function calculateBMI(){
+
+let height=document.getElementById("height").value/100;
+let weight=document.getElementById("weight").value;
+
+let bmi=weight/(height*height);
+
+let result=document.getElementById("bmiResult");
+
+if(bmi<18.5){
+result.innerHTML="BMI: "+bmi.toFixed(1)+" (Underweight)";
+}
+
+else if(bmi>=18.5 && bmi<25){
+result.innerHTML="BMI: "+bmi.toFixed(1)+" (Normal)";
+}
+
+else{
+result.innerHTML="BMI: "+bmi.toFixed(1)+" (Overweight)";
+}
+
+}
+
+
+function showDiet(){
+
+let weight=document.getElementById("weight").value;
+
+let diet=document.getElementById("dietResult");
+
+if(weight<50){
+
+diet.innerHTML="Weight Gain Diet:<br>Breakfast: Milk + Banana<br>Lunch: Rice + Paneer<br>Snack: Peanut Butter Sandwich<br>Dinner: Eggs + Chapati";
+
+}
+
+else if(weight>=50 && weight<=70){
+
+diet.innerHTML="Balanced Diet:<br>Breakfast: Oats + Fruits<br>Lunch: Dal + Rice + Salad<br>Snack: Nuts<br>Dinner: Roti + Vegetables";
+
+}
+
+else{
+
+diet.innerHTML="Weight Loss Diet:<br>Breakfast: Oats + Green Tea<br>Lunch: Salad + Grilled Chicken<br>Snack: Fruit Bowl<br>Dinner: Soup + Vegetables";
+
+}
+
+}
+
+
+function trackWater(){
+
+let glasses=document.getElementById("water").value;
+
+let result=document.getElementById("waterResult");
+
+let goal=8;
+
+let remaining=goal-glasses;
+
+if(glasses>=goal){
+
+result.innerHTML="Great! You completed today's water goal";
+
+}
+
+else{
+
+result.innerHTML="You need "+remaining+" more glasses of water today";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
